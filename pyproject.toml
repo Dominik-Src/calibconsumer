@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CalibConsumer"  # import name calibconsumer
+version = "0.1.0"
+description = "Rays and pixels of a calibrated camera from a mapping.json file: pixel to ray, world point to pixel, for central and non-central cameras"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Dominik Rueß" }]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+
+[project.optional-dependencies]
+fit = ["scipy>=1.10"]
+opencv = ["opencv-python-headless>=4.8"]
+plot = ["matplotlib>=3.6"]
+test = ["pytest>=7", "scipy>=1.10", "matplotlib>=3.6"]
+
+[project.scripts]
+calibconsumer = "calibconsumer.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120

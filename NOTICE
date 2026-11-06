@@ -1,0 +1,5 @@
+calibconsumer – rays and pixels of a calibrated camera from a mapping.json file
+Copyright 2026 Dominik Rueß
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+It contains no third-party code; it depends on NumPy (BSD-3-Clause) and, optionally, SciPy (BSD-3-Clause).

@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it."
+title: "calibconsumer"
+authors:
+  - family-names: "Rueß"
+    given-names: "Dominik"
+license: Apache-2.0
+version: 0.1.0
+
+references:
+  - type: thesis
+    thesis-type: "Dissertation"
+    authors:
+      - family-names: "Rueß"
+        given-names: "Dominik"
+    title: "Smooth Central and Non-Central Camera Models in Object Space"
+    date-released: "2024-01-24"
+    doi: "10.18452/27899"
+    institution:
+      name: "Humboldt-Universität zu Berlin"
