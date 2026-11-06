@@ -8,8 +8,8 @@ YAML/XML files) are optional. Three ways to use it:
 Put `src` on Python's path:
 
 ```
-git clone <repository> calibconsumer
-cd src
+git clone https://github.com/Dominik-Src/calibconsumer.git calibconsumer
+cd calibconsumer
 PYTHONPATH=src python3 -c "import calibconsumer; print(calibconsumer.__version__)"
 PYTHONPATH=src python3 -m calibconsumer evaluate --help
 ```
@@ -31,6 +31,7 @@ python3 -m venv .venv
 . .venv/bin/activate                       # Windows: .venv\Scripts\activate
 pip install /path/to/calibconsumer         # or, from its folder: pip install .
 pip install "/path/to/calibconsumer[plot]" # with matplotlib for the plots
+pip install "calibconsumer @ git+https://github.com/Dominik-Src/calibconsumer.git@v0.1.1"   # straight from the repository, a fixed release
 ```
 
 The extras are `fit` (SciPy), `plot` (matplotlib), `opencv` (opencv-python-headless) and `test` (pytest and the

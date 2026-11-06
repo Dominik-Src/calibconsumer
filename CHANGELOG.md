@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 – 2026-11-06
+
+- The repository's address in the package metadata (`project.urls`), `CITATION.cff` (`repository-code`) and the
+  installation notes; `pip install` straight from a release tag; INSTALL.md's clone example went into `src` instead of
+  the clone.
+
 ## 0.1.0 – 2026-11-06
 
 - First version: `mapping.json` format version 1 (uniform cubic tensor B-spline of the ray direction in

@@ -58,7 +58,7 @@ calibconsumer evaluate --camera camera.yml --points points.csv --world target.tx
 ```
 
 **Installation** (`INSTALL.md`): from the source folder with `PYTHONPATH=src`, or `pip install .` (into a virtual
-environment), or a wheel from `python3 -m build`. Requires Python ≥ 3.10 and NumPy. Optional extras: `[fit]` adds
+environment), or `pip install "calibconsumer @ git+https://github.com/Dominik-Src/calibconsumer.git@v0.1.1"`, or a wheel from `python3 -m build`. Requires Python ≥ 3.10 and NumPy. Optional extras: `[fit]` adds
 SciPy for `calibconsumer.fit` (re-fit your own ray samples to the format), `[plot]` matplotlib for the plots, and
 `[opencv]` OpenCV for its backend and its YAML/XML files. `calibconsumer.remap.pinhole_maps` builds `cv2.remap` maps.
 

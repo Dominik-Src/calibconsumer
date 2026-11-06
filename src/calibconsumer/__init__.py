@@ -10,7 +10,7 @@ from .classic import BrownCamera, OpenCVCamera
 from .fileformat import FORMAT, FORMAT_VERSION, FormatError
 from .uncertainty import Uncertainty, attach as _attach_uncertainty, ellipse
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __all__ = ["Camera", "OpenCVCamera", "BrownCamera", "Status", "load", "FormatError", "FORMAT", "FORMAT_VERSION",
            "Uncertainty", "ellipse", "__version__"]
 
