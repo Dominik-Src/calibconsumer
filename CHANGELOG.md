@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 – 2026-11-07
+
+- Images of a camera's viewing directions (`calibconsumer.remap`): `directions_maps` for any image of directions,
+  `sphere_maps` (an equirectangular panorama, the pole up or on the optical axis), `cube_maps` (six 90° pinhole faces),
+  their directions and angles; every map from a coarse grid (`step`, the edges of the calibrated area solved exactly) –
+  `pinhole_maps` gained `step`.
+- `calibconsumer.visual`: the sensor's checkerboard on the sphere, the sphere's latitude-longitude grid, checkerboard or
+  a texture (an earth map) on the sensor, several cameras' coverage on one sphere – a rig kept in its relative orientation.
+- `calibconsumer.stereo.rectify`: the stereo rectification of a pair of cameras of any model from their relative pose.
+- Examples `mapping_images.py` and `rectify_stereo_pair.py`.
+
 ## 0.1.1 – 2026-11-06
 
 - The repository's address in the package metadata (`project.urls`), `CITATION.cff` (`repository-code`) and the

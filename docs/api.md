@@ -25,7 +25,25 @@
 - `calibconsumer.fit` (SciPy): `fit_spline`, `from_ray_samples(uv, directions, origins=None, *, hull, resolution, intervals,
   rectangle=None, rotation=None)`, `from_camera(camera, intervals=None)` (any camera to the spline format), `errors`,
   `injective`, `folded_share`.
-- `calibconsumer.remap.pinhole_maps(camera, focal_px, size, rotation=None, distance=None)` → maps for `cv2.remap`.
+- `calibconsumer.remap` – maps for `cv2.remap` (−1 where unmapped; `step` > 1: every step-th pixel solved, the rest
+  interpolated, the edges of the calibrated area exact): `pinhole_maps(camera, focal_px, size, rotation=None,
+  distance=None, step=1)` (OpenCV frame), `directions_maps(camera, directions, distance=None, step=1)` (any image of
+  viewing directions), `sphere_maps(camera, size=(2048, 1024), pole="up" | "axis", rotation=None, distance=None, step=4)`
+  (an equirectangular panorama: pole "up" – longitude across, latitude up, the horizon through the optical axis; pole
+  "axis" – the polar angle from the optical axis down the rows, so each row is one field angle), `cube_maps(camera,
+  face_size=1024, rotation=None, distance=None, step=4)` → {front, right, back, left, up, down} (90° pinholes),
+  `sphere_directions(size, pole)`, `sphere_angles(directions, pole)`, `cube_directions(face_size, face)`. `rotation`
+  takes a direction of the sphere's frame into the camera's (a rig: the transposed relative rotation of a camera).
+- `calibconsumer.visual` – the mapping at a glance, no photograph needed (RGB uint8): `sensor_on_sphere(camera,
+  size=(1024, 512), squares=16, pole="up", rotation=None, distance=None)` (the sensor's checkerboard on the sphere),
+  `sphere_on_sensor(camera, width=1024, grid_deg=10, pole="axis", rotation=None, texture=None, checkerboard=False)` (a
+  latitude-longitude grid, the sphere's checkerboard or an equirectangular texture such as an earth map on the sensor),
+  `coverage_on_sphere(cameras, rotations=None, size=(1024, 512))` → (image, count) (several cameras on one sphere, a rig
+  kept in its relative orientation).
+- `calibconsumer.stereo.rectify(camera1, camera2, rotation, translation, size=(1280, 960), focal_px=None,
+  vertical=None, distance=None, step=4)` → the rectified frames, one focal length, the maps of both cameras (any model:
+  OpenCV's stereoRectify for generic cameras; the relative pose as relativeOrientations.json gives it, x₁ = R x₂ + t);
+  `stereo.rectifying_rotation(rotation, translation, vertical=None)`.
 - `calibconsumer.fileformat`: `read`, `write`, `validate`, `FormatError`.
 - Re-evaluation (`docs/evaluate.md`): `calibconsumer.evaluate.evaluate(camera, views, world, poses_given=None,
   world_covariance=None, estimate_poses="missing", image_sigma=None, outlier_threshold=4.0)` → `Evaluation` (per
