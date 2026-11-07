@@ -1,7 +1,8 @@
 # Copyright 2026 Dominik Rueß
 # SPDX-License-Identifier: Apache-2.0
 """M19–M22: images of the viewing directions – sphere and cube maps (M19), maps from a coarse grid (M20), the mapping
-images without a photograph (M21), the stereo rectification of a pair (M22)."""
+images without a photograph (M21; M21b the outlines filled against the maps), the stereo rectification of a pair
+(M22)."""
 import math
 import os
 
@@ -104,6 +105,43 @@ def test_m21_the_mapping_images():
     image, count = visual.coverage_on_sphere([camera, camera], [None, rig], (128, 64))
     assert image.shape == (64, 128, 3) and count.max() == 2 and count.min() == 0
     assert count[32, 64] >= 1 and tuple(image[32, 0]) == visual.BACKGROUND
+
+
+def boundary(image):
+    """The pixels next to another colour (a 3 × 3 neighbourhood)."""
+    label = image[..., 0].astype(int) * 65536 + image[..., 1].astype(int) * 256 + image[..., 2]
+    pad = np.pad(label, 1, mode="edge")
+    near = np.zeros(label.shape, dtype=bool)
+    for dy in (0, 1, 2):
+        for dx in (0, 1, 2):
+            near |= pad[dy:dy + label.shape[0], dx:dx + label.shape[1]] != label
+    return near
+
+
+def test_m21b_outlines_filled_equal_the_maps(case):
+    """0.2.1: the sensor's checkerboard on the sphere and the coverage from the shapes' outlines mapped forward and
+    filled – equal to the maps but on a colour boundary, the pole on the optical axis included."""
+    camera, truth = case
+    distance = None if camera.central else 2000.0
+    for pole in ("up", "axis"):
+        maps = visual.sensor_on_sphere(camera, (240, 120), squares=8, pole=pole, distance=distance, method="maps")
+        outline = visual.sensor_on_sphere(camera, (240, 120), squares=8, pole=pole, distance=distance, method="outline")
+        differ = np.any(maps != outline, axis=-1)
+        assert differ.mean() < 0.005, (truth.name, pole)
+        assert not np.any(differ & ~boundary(maps)), (truth.name, pole)
+    turn = math.radians(60)
+    rig = np.array([[math.cos(turn), 0, math.sin(turn)], [0, 1, 0], [-math.sin(turn), 0, math.cos(turn)]])
+    _, a = visual.coverage_on_sphere([camera, camera], [None, rig], (240, 120), distance=distance, method="maps")
+    _, b = visual.coverage_on_sphere([camera, camera], [None, rig], (240, 120), distance=distance, method="outline")
+    assert np.mean(a != b) < 0.005
+
+
+def test_m21b_classic_models_keep_the_maps():
+    camera = calibconsumer.OpenCVCamera.from_dict({"cameraMatrix": [[500, 0, 319.5], [0, 500, 239.5], [0, 0, 1]],
+                                                  "distortionCoefficients": [0, 0, 0, 0], "imageSize": [640, 480]})
+    with pytest.raises(ValueError):
+        visual.sensor_on_sphere(camera, (120, 60), method="outline")
+    assert np.array_equal(visual.sensor_on_sphere(camera, (120, 60)), visual.sensor_on_sphere(camera, (120, 60), method="maps"))
 
 
 def test_m22_a_rectified_pair_shares_its_rows():

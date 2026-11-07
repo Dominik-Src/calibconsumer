@@ -39,7 +39,9 @@
   `sphere_on_sensor(camera, width=1024, grid_deg=10, pole="axis", rotation=None, texture=None, checkerboard=False)` (a
   latitude-longitude grid, the sphere's checkerboard or an equirectangular texture such as an earth map on the sensor),
   `coverage_on_sphere(cameras, rotations=None, size=(1024, 512))` → (image, count) (several cameras on one sphere, a rig
-  kept in its relative orientation).
+  kept in its relative orientation). The images on the sphere take `method="auto"`: the shapes' outlines mapped forward
+  and filled (0.2.1; a camera with a polygonal calibrated area whose direction map does not fold), else every sphere
+  pixel solved back to the sensor (`"maps"`; the classic models, folded cameras).
 - `calibconsumer.stereo.rectify(camera1, camera2, rotation, translation, size=(1280, 960), focal_px=None,
   vertical=None, distance=None, step=4)` → the rectified frames, one focal length, the maps of both cameras (any model:
   OpenCV's stereoRectify for generic cameras; the relative pose as relativeOrientations.json gives it, x₁ = R x₂ + t);

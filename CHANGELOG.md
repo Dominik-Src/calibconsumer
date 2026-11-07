@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 – 2026-11-07
+
+- `visual.sensor_on_sphere` and `visual.coverage_on_sphere` map only the outlines – each checkerboard square clipped to
+  the calibrated area, the area itself – forward (pixel → ray) and fill them by scanline, instead of solving every
+  sphere pixel back to the sensor: 32–91× faster on the test cameras (0.1–0.25 s for 1600 × 800), the images equal but
+  for 0.004 % of the pixels, all on a boundary; a rig's coverage 13.9 s → 0.08 s. For a camera with a polygonal
+  calibrated area whose direction map does not fold; the classic models and folded cameras keep the maps
+  (`method="auto"`, or `"outline"`, `"maps"`).
+
 ## 0.2.0 – 2026-11-07
 
 - Images of a camera's viewing directions (`calibconsumer.remap`): `directions_maps` for any image of directions,
